@@ -8,4 +8,4 @@ EDA.R is a somewhat disconnected exploritory data analysis. It includes some use
 
 FE-Regression.R is were the analysis lies. Here i estimate various fixed effects models.
 
-Goal is to estimate a Fixed Effects Model with democracy Quality (as measured by various V-Dem indices) as dependent variable. The Economic Freedom of the World index is used as indipendend variable. The Worldbank and World Inequaliy Database variales are used as controll.
+Goal is to estimate a Fixed Effects Model with democracy Quality (as measured by various V-Dem indices) as dependent variable. The Economic Freedom of the World index is used as indipendend variable. The Worldbank and World Inequaliy Database variales are used as controll. 
