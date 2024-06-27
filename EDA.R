@@ -1,7 +1,7 @@
 #Arbeitsblatt zur Exploritory Data Analysis (EDA) von df_all_cases und Subsets.
 
 
-df_all_cases = readRDS(file.path("Data", "rds", "df_all_cases.rds"))
+df = readRDS(file.path("Data", "rds", "df_all_cases.rds"))
 OECD_ISO3 = readRDS(file.path("Data", "rds", "OECD_ISO3.rds"))
 
 ##### Tabellen #####
@@ -20,6 +20,12 @@ bewerben(unique(df_all_cases$year))
 ### Univariate Daten zur übersicht: ###
 #Falle x Zeit
 df_all_cases %>% ggplot(aes(year)) + geom_bar(width = 1) + labs(title = "Verteilung der Fälle über Zeit") + scale_x_continuous(n.breaks = 16)
+
+#Fälle X Zeit für OECD DD1 Fälle
+df_all_cases %>% filter(df_all_cases$country_text_id %in% OECD_ISO3 & df_all_cases$e_chga_demo != 0) %>%
+  ggplot(aes(year)) + geom_bar(width = 1) + labs(title = "Verteilung der Fälle über Zeit") + 
+  scale_x_continuous(n.breaks = 16)
+### GGF e_chga_demo für aktuellste fälle selbst nachcodieren?? #######
 
 ### Bivariate Graphen zur Übersicht: ###
 df_all_cases2 %>% ggplot(aes(v2x_libdem, Economic_Freedom_Summary_Index)) + geom_density_2d_filled()

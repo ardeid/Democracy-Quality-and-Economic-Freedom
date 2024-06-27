@@ -1,0 +1,5 @@
+Korrealtionstabellen für alle Demokratiedimensionen neu erstellen.
+
+Nachgucken, in welcher einkeit die V-Dem GDP zahlen sind. 
+
+Normalisierung der Regressionsparameter.
