@@ -1,0 +1,131 @@
+---
+title: "Deokratie und Ökonomischer Liberalismus"
+author: "Arne Diedrich"
+date: "`r Sys.Date()`"
+output: html_document
+---
+```{r setup, include=FALSE}
+library(stargazer)
+library(sjPlot)
+
+```
+```{r Importing Regerssion,code = readLines("FE-Regression.R"), include=FALSE}
+```
+
+### Liberal Democracy Index
+```{r LDI, echo=FALSE}
+tab_model(LDI_pooled, LDI_fe_c, LDI_fe_y, LDI_fe_c_y,
+          show.se = TRUE,
+          show.ci = FALSE,
+          drop = c(names(table(df_LD$country_name)), names(table(df_LD$year))),
+          #order.terms = c(1, 6, 3, 2, 4, 5),
+          #pred.labels = c("Konstante", "FDP", "FW", "Grüne", "Linke", "SPD"),
+          title = "Liberal Democray Index Fixed Effects Regressions",
+          dv.labels = c("Pooled Model", 
+                        "Fixed Effects Land", 
+                        "Fixed Effects Jahr", 
+                        "Two-way Fixed Effects"),
+          string.pred = "Kovariaten",
+          string.est = "Schätzer",
+          string.se = "SE",
+          string.p = "p-Wert"
+)
+```
+
+
+
+
+
+### Pooled Models
+```{r pooled, echo=FALSE}
+tab_model(LIB_pooled, EGAL_pooled, PART_pooled, DELIB_pooled, POLY_pooled,
+          show.se = TRUE,
+          show.ci = FALSE,
+          drop = c(names(table(df_LD$country_name)), names(table(df_LD$year))),
+          #order.terms = c(1, 6, 3, 2, 4, 5),
+          #pred.labels = c("Konstante", "FDP", "FW", "Grüne", "Linke", "SPD"),
+          title = "Fixed Effects Regressions - Pooled",
+          dv.labels = c("LIB", 
+                        "EGAL", 
+                        "PART", 
+                        "DELIB",
+                        "POLY"),
+          string.pred = "Kovariaten",
+          string.est = "Schätzer",
+          string.se = "SE",
+          string.p = "p-Wert"
+)
+```
+
+### Fixed Effects Models
+##### FE Year
+```{r Fe_Year, echo=FALSE}
+tab_model(LIB_fe_y, EGAL_fe_y, PART_fe_y, DELIB_fe_y, POLY_fe_y,
+          show.se = TRUE,
+          show.ci = FALSE,
+          drop = c(names(table(df_LD$country_name)), names(table(df_LD$year))),
+          #order.terms = c(1, 6, 3, 2, 4, 5),
+          #pred.labels = c("Konstante", "FDP", "FW", "Grüne", "Linke", "SPD"),
+          title = "Fixed Effects Regressions - Year",
+          dv.labels = c("LIB", 
+                        "EGAL", 
+                        "PART", 
+                        "DELIB",
+                        "POLY"),
+          string.pred = "Kovariaten",
+          string.est = "Schätzer",
+          string.se = "SE",
+          string.p = "p-Wert"
+)
+```
+##### FE Country
+```{r Fe_Country, echo=FALSE}
+tab_model(LIB_fe_c, EGAL_fe_c, PART_fe_c, DELIB_fe_c, POLY_fe_c,
+          show.se = TRUE,
+          show.ci = FALSE,
+          drop = c(names(table(df_LD$country_name)), names(table(df_LD$year))),
+          #order.terms = c(1, 6, 3, 2, 4, 5),
+          #pred.labels = c("Konstante", "FDP", "FW", "Grüne", "Linke", "SPD"),
+          title = "Fixed Effects Regressions - Country",
+          dv.labels = c("LIB", 
+                        "EGAL", 
+                        "PART", 
+                        "DELIB",
+                        "POLY"),
+          string.pred = "Kovariaten",
+          string.est = "Schätzer",
+          string.se = "SE",
+          string.p = "p-Wert"
+)
+```
+##### FE Country-Year
+```{r Fe_Year_Country, echo=FALSE}
+tab_model(LIB_fe_c_y, EGAL_fe_c_y, PART_fe_c_y, DELIB_fe_c_y, POLY_fe_c_y,
+          show.se = TRUE,
+          show.ci = FALSE,
+          drop = c(names(table(df_LD$country_name)), names(table(df_LD$year))),
+          #order.terms = c(1, 6, 3, 2, 4, 5),
+          #pred.labels = c("Konstante", "FDP", "FW", "Grüne", "Linke", "SPD"),
+          title = "Fixed Effects Regressions - Country-Year",
+          dv.labels = c("LIB", 
+                        "EGAL", 
+                        "PART", 
+                        "DELIB",
+                        "POLY"),
+          string.pred = "Kovariaten",
+          string.est = "Schätzer",
+          string.se = "SE",
+          string.p = "p-Wert"
+)
+```
+
+```{r plot, echo=FALSE}
+LDI_plot <- df_LD %>% ggplot(aes(v2x_libdem, EconFree_Index)) + geom_point()
+LIB_plot <- df_LD %>% ggplot(aes(v2x_liberal, EconFree_Index)) + geom_point()
+EGAL_plot <- df_LD %>% ggplot(aes(v2x_egal, EconFree_Index)) + geom_point()
+PART_plot <- df_LD %>% ggplot(aes(v2x_partip, EconFree_Index)) + geom_point()
+DELIB_plot <- df_LD %>% ggplot(aes(v2xdl_delib, EconFree_Index)) + geom_point()
+POLY_plot <- df_LD %>% ggplot(aes(v2x_polyarchy, EconFree_Index)) + geom_point()
+library(ggpubr)
+ggarrange(LDI_plot, LIB_plot, EGAL_plot, PART_plot, DELIB_plot, POLY_plot, nrow = 2, ncol = 3)
+```
